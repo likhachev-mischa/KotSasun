@@ -1,0 +1,12 @@
+norm1|33333
+norm2|33333
+norm3|33333
+debt1|23333
+debt2|23333
+norm4|43333
+debt3|23333
+petooh3|34567
+petooh3|34567
+petooh3|34567
+petooh3|34567
+petooh3|34567
