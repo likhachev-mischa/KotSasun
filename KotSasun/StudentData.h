@@ -7,6 +7,9 @@ class StudentData {
   float _avg;
   bool _isInDebt;
 
+  //static const int marksSize = 5;
+  //int* marks;
+
  public:
   StudentData() : _fio(), _avg(NULL), _isInDebt(false) {}
   StudentData(const StudentData& other)

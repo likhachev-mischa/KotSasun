@@ -6,26 +6,25 @@
 template <class T>
 class BST {
  private:
-  template <class T>
   class TreeNode {
    public:
-    T _data;
-    TreeNode* _left;
-    TreeNode* _right;
+    T data;
+    TreeNode* left;
+    TreeNode* right;
 
-    TreeNode() : _data(), _left(nullptr), _right(nullptr) {}
+    TreeNode() : data(), left(nullptr), right(nullptr) {}
 
-    TreeNode(T data) : _data(data), _left(nullptr), _right(nullptr) {}
+    TreeNode(T data) : data(data), left(nullptr), right(nullptr) {}
 
     ~TreeNode() {
-      if (_left) {
-        delete _left;
-        _left = nullptr;
+      if (left) {
+        delete left;
+        left = nullptr;
       }
 
-      if (_right) {
-        delete _right;
-        _right = nullptr;
+      if (right) {
+        delete right;
+        right = nullptr;
       }
     }
 
@@ -60,8 +59,8 @@ class BST {
     TreeNode* prevNode = nullptr;
 
     while (tempNode) {
-      tempKey = tempNode->data.key();
-      insertKey = data.key();
+      int tempKey = tempNode->data.key();
+      int insertKey = data.key();
 
       if (insertKey >= tempKey) {
         prevNode = tempNode;
