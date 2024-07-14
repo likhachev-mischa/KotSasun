@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <queue>
+#include <utility>
 
 #include "LinkedList.h"
 // Binary Search Tree implementation with duplicate values allowed
@@ -14,7 +16,6 @@ class BST {
    public:
     int key;
     LinkedList<T> data;
-    // T data;
     TreeNode* left;
     TreeNode* right;
 
@@ -87,6 +88,38 @@ class BST {
       prevNode->right = insNode;
     } else {
       prevNode->left = insNode;
+    }
+  }
+
+  // NOTE: it's 4:59AM... no
+  void del(T data);
+
+  // 0 height is full tree
+  void breadthFirstView(int height = 0) {
+    if (!_root || height < 0) return;
+
+    std::queue<std::pair<TreeNode*, int>> que;
+    que.push({_root, 1});
+
+    while (!que.empty()) {
+      auto currentPair = q.front();
+      que.pop();
+
+      TreeNode* currentNode = currentPair.first;
+      int currentDepth = currentPair.second;
+
+      if (height != 0 && currentDepth > height) break;
+
+      // change output if needed
+      std::cout << currentNode->key << " ";
+
+      if (currentNode->left) {
+        q.push({currentNode->left, currentDepth + 1});
+      }
+
+      if (currentNode->right) {
+        q.push({currentNode->right, currentDepth + 1});
+      }
     }
   }
 };

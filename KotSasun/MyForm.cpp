@@ -10,19 +10,23 @@
 using namespace KotSasun;
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-  int marks[5] = {2, 3, 4, 5, 5};
-  StudentData vasya("1_Vasya", marks);
-  StudentData vasya2("2_Vasya", marks);
+  // //--debug--
 
-  int marks2[5] = {2, 2, 2, 3, 4};
-  StudentData dima("1_Dima", marks2);
-  StudentData dima2("2_Dima", marks2);
+  // int marks[5] = {2, 3, 4, 5, 5};
+  // StudentData vasya("1_Vasya", marks);
+  // StudentData vasya2("2_Vasya", marks);
 
-  BST<StudentData> bst;
-  bst.insert(vasya);
-  bst.insert(vasya2);
-  bst.insert(dima);
-  bst.insert(dima2);
+  // int marks2[5] = {2, 2, 2, 3, 4};
+  // StudentData dima("1_Dima", marks2);
+  // StudentData dima2("2_Dima", marks2);
+
+  // BST<StudentData> bst;
+  // bst.insert(vasya);
+  // bst.insert(vasya2);
+  // bst.insert(dima);
+  // bst.insert(dima2);
+
+  ////-- end debug --
 
   Application::EnableVisualStyles();
   Application::SetCompatibleTextRenderingDefault(false);
