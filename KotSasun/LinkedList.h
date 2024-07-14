@@ -2,117 +2,97 @@
 #include <iostream>
 
 template <class T>
-struct Node
-{
+struct Node {
   T data;
   Node* next;
 
-  Node()
-  {
-    next = nullptr;
-  }
+  Node() { next = nullptr; }
 
-  Node(const T& data)
-  {
+  Node(const T& data) {
     this->data = data;
     next = nullptr;
   }
 
-  Node(const T& data, Node* next)
-  {
+  Node(const T& data, Node* next) {
     this->data = data;
     this->next = next;
   }
 };
 
 template <class T>
-class LinkedList
-{
-private:
+class LinkedList {
+ private:
   Node<T>* head;
 
-  Node<T>* findPosition(const T& data)
-  {
+  Node<T>* findPosition(const T& data) {
     Node<T>* current = head;
 
-    if (data < current->data)
-    {
+    if (data < current->data) {
       return nullptr;
     }
 
     Node<T>* result = nullptr;
 
-    while (data > current->data && current->next != nullptr)
-    {
+    while (data > current->data && current->next != nullptr) {
       result = current;
       current = current->next;
     }
-    if (current->next == nullptr && data > current->data)
-    {
+    if (current->next == nullptr && data > current->data) {
       result = current;
     }
 
     return result;
   }
 
-  void printElemRecursive(Node<T>* elem)
-  {
+  void printElemRecursive(Node<T>* elem) {
     std::cout << elem->data << " ";
-    if (elem->next)
-    {
+    if (elem->next) {
       printElemRecursive(elem->next);
     }
   }
 
-  T sumElemRecursive(Node<T>* elem)
-  {
+  T sumElemRecursive(Node<T>* elem) {
     T result = elem->data;
-    if (elem->next)
-    {
+    if (elem->next) {
       return result + sumElemRecursive(elem->next);
     }
     return result;
   }
 
-public:
-  LinkedList()
-  {
-    head = nullptr;
-  }
+ public:
+  LinkedList() { head = nullptr; }
+
+  LinkedList(const T& data) { head = new Node<T>(data); }
+
   template <class T>
-  class Iterator : public std::iterator<std::forward_iterator_tag, T, ptrdiff_t, T*, T&>
-  {
+  class Iterator
+      : public std::iterator<std::forward_iterator_tag, T, ptrdiff_t, T*, T&> {
     Node<T>* itr;
 
-  public:
-
+   public:
     Iterator() : itr(nullptr) {}
     Iterator(Node<T>* other) : itr(other) {}
 
     T& operator*() { return itr->data; }
     T& operator->() { return itr->data; }
 
-    const T operator *() const { return itr->data; }
+    const T operator*() const { return itr->data; }
     const T operator->() const { return itr->data; }
-
 
     Node<T>* GetNode() { return itr; }
 
-    Iterator& operator++()
-    {
+    Iterator& operator++() {
       itr = itr->next;
       return *this;
     }
-    Iterator operator++(int)
-    {
+    Iterator operator++(int) {
       iterator tmp = *this;
       ++(*this);
       return tmp;
     }
 
-    bool operator == (const Iterator& other) const { return itr == other.itr; }
-    bool operator != (const Iterator& other) const { return itr != other.itr; }
-
+    bool operator==(const Iterator& other) const { return itr == other.itr; }
+    bool operator!=(const Iterator& other) const { return itr != other.itr; }
   };
   typedef Iterator<T> iterator;
   typedef Iterator<const T> const_iterator;
@@ -120,81 +100,64 @@ public:
   iterator begin() { return iterator(head); }
   iterator end() { return iterator(nullptr); }
 
-  void initializeFromArray(T* array, int n)
-  {
+  void initializeFromArray(T* array, int n) {
     head = new Node;
     Node* current = head;
     current->data = array[0];
 
-    for (int i = 1; i < n; ++i)
-    {
+    for (int i = 1; i < n; ++i) {
       current->next = new Node(array[i]);
       current = current->next;
     }
   }
 
-  void initializeFromArrayReversed(T* array, int n)
-  {
+  void initializeFromArrayReversed(T* array, int n) {
     head = new Node;
     Node* current = head;
     current->data = array[n - 1];
 
-    for (int i = n - 2; i >= 0; --i)
-    {
+    for (int i = n - 2; i >= 0; --i) {
       current->next = new Node(array[i]);
       current = current->next;
     }
   }
 
-  void initializeFromArrayInOrder(T* array, int n)
-  {
+  void initializeFromArrayInOrder(T* array, int n) {
     head = new Node(array[0]);
-    for (int i = 1; i < n; ++i)
-    {
+    for (int i = 1; i < n; ++i) {
       T data = array[i];
       Node* insertionNode = findPosition(data);
 
-      if (insertionNode == nullptr)
-      {
+      if (insertionNode == nullptr) {
         addToHead(data);
-      }
-      else
-      {
+      } else {
         addAfterNode(data, insertionNode);
       }
     }
   }
 
-  bool isEmpty()
-  {
-    return head == nullptr;
-  }
+  bool isEmpty() { return head == nullptr; }
 
-  void addToHead(const T& data)
-  {
+  void addToHead(const T& data) {
     Node<T>* newHead = new Node<T>(data, head);
     head = newHead;
   }
 
-  void addAfterNode(const T& data, Node<T>* elem)
-  {
+  void addAfterNode(const T& data, Node<T>* elem) {
     Node<T>* current = elem;
     Node<T>* newNext = new Node<T>(data, elem->next);
     current->next = newNext;
   }
 
-  void addAfterIndex(const T& data, int idx)
-  {
-    if (idx < 0)
-    {
+  void addAfterIndex(const T& data, int idx) {
+    if (idx < 0) {
       addToHead(data);
       return;
     }
 
     int counter = 0;
     Node<T>* current = head;
-    while (counter < idx)
-    {
+    while (counter < idx) {
       current = current->next;
       ++counter;
     }
@@ -202,8 +165,7 @@ public:
     addAfterNode(data, current);
   }
 
-  void deleteFromHead()
-  {
+  void deleteFromHead() {
     Node<T>* current = head;
     head = head->next;
 
@@ -212,8 +174,7 @@ public:
     current = nullptr;
   }
 
-  void deleteAfterNode(Node<T>* elem)
-  {
+  void deleteAfterNode(Node<T>* elem) {
     Node<T>* current = elem;
     Node<T>* toDelete = current->next;
     current->next = toDelete->next;
@@ -223,46 +184,31 @@ public:
     toDelete = nullptr;
   }
 
-  void print()
-  {
+  void print() {
     Node<T>* current = head;
-    while (current != nullptr)
-    {
+    while (current != nullptr) {
       std::cout << current->data << " ";
       current = current->next;
     }
   }
 
-  void printRecursive()
-  {
-    printElemRecursive(head);
-  }
+  void printRecursive() { printElemRecursive(head); }
 
-  T sumRecursive()
-  {
-    return sumElemRecursive(head);
-  }
+  T sumRecursive() { return sumElemRecursive(head); }
 
   template <class T>
-  friend std::ostream& operator <<(std::ostream& os, const LinkedList<T>& obj)
-  {
+  friend std::ostream& operator<<(std::ostream& os, const LinkedList<T>& obj) {
     Node<T>* current = obj.head;
-    while (current != nullptr)
-    {
+    while (current != nullptr) {
       os << current->data << " ";
       current = current->next;
     }
     return os;
   }
 
-  ~LinkedList()
-  {
-    while (!isEmpty())
-    {
+  ~LinkedList() {
+    while (!isEmpty()) {
       deleteFromHead();
     }
   }
 };
-
-
-

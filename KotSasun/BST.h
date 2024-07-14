@@ -1,20 +1,27 @@
 #pragma once
 
 #include <iostream>
+
+#include "LinkedList.h"
 // Binary Search Tree implementation with duplicate values allowed
+// Duplicates implemented similar to count field technique, that is each node
+// contains one linked list of all the values with the same key
 
 template <class T>
 class BST {
  private:
   class TreeNode {
    public:
-    T data;
+    int key;
+    LinkedList<T> data;
+    // T data;
     TreeNode* left;
     TreeNode* right;
 
-    TreeNode() : data(), left(nullptr), right(nullptr) {}
+    TreeNode() : key(-1), data(), left(nullptr), right(nullptr) {}
 
-    TreeNode(T data) : data(data), left(nullptr), right(nullptr) {}
+    TreeNode(T data)
+        : key(data.key()), data(data), left(nullptr), right(nullptr) {}
 
     ~TreeNode() {
       if (left) {
@@ -40,6 +47,7 @@ class BST {
 
  public:
   BST() : _root(nullptr) {}
+
   ~BST() {
     if (_root) {
       delete _root;
@@ -49,6 +57,7 @@ class BST {
 
   void insert(T data) {
     TreeNode* insNode = new TreeNode(data);
+    int insertKey = insNode->key;
 
     if (!(_root)) {
       _root = insNode;
@@ -59,19 +68,22 @@ class BST {
     TreeNode* prevNode = nullptr;
 
     while (tempNode) {
-      int tempKey = tempNode->data.key();
-      int insertKey = data.key();
+      int tempKey = tempNode->key;
 
-      if (insertKey >= tempKey) {
+      if (insertKey > tempKey) {
         prevNode = tempNode;
         tempNode = tempNode->right;
-      } else {
+      } else if (insertKey < tempKey) {
         prevNode = tempNode;
         tempNode = tempNode->left;
+      } else {
+        delete insNode;
+        tempNode->data.addToHead(data);
+        return;
       }
     }
 
-    if (data.key() >= prevNode->data.key()) {
+    if (insertKey > prevNode->key) {
       prevNode->right = insNode;
     } else {
       prevNode->left = insNode;

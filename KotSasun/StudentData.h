@@ -4,7 +4,7 @@
 class StudentData {
  private:
   std::string _fio;
-  float _avg;
+  double _avg;
   bool _isInDebt;
 
   //static const int marksSize = 5;
@@ -35,7 +35,7 @@ class StudentData {
 
   const bool isInDebt() { return _isInDebt; }
 
-  const float avg() { return _avg; }
+  const double avg() { return _avg; }
 
   bool operator>(StudentData& other) { return _avg > other.avg(); }
 
