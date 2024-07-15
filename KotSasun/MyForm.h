@@ -3,9 +3,15 @@
 #include "Config.h"
 #include <fstream>
 #include <msclr/marshal_cppstd.h>
+#include <queue>
 
 #include "LinkedList.h"
+#include "ITree.h"
+#include "BST.h"
+#include "AVL.h"
 #include "StudentData.h"
+#include "Utils.h"
+
 
 namespace KotSasun {
 
@@ -44,7 +50,7 @@ namespace KotSasun {
 
 	protected:
 
-	private: System::Windows::Forms::ToolStrip^ toolStrip1;
+
 	private: System::Windows::Forms::Button^ FileNameSendButton;
 	private: System::Windows::Forms::Button^ FileNameDeclineButton;
 	private: System::Windows::Forms::Label^ CreateFileLabel;
@@ -77,8 +83,20 @@ namespace KotSasun {
 	private: System::Windows::Forms::TextBox^ MarksTextBox1;
 	private: System::Windows::Forms::TextBox^ FIOTextBox;
 	private: System::Windows::Forms::TextBox^ FileNameTextBox;
-	private: System::Windows::Forms::Button^ LinkedList1;
-	private: System::Windows::Forms::Panel^ panel1;
+	private: System::Windows::Forms::Button^ LinkedListButton1;
+
+	private: System::Windows::Forms::Panel^ DisplayPanel;
+	private: System::Windows::Forms::Button^ LinkedListButton2;
+
+
+	private: System::Windows::Forms::Button^ BSTButton;
+	private: System::Windows::Forms::Button^ AVLButton;
+	private: System::Windows::Forms::Button^ BestStudentsButton;
+
+
+	private: System::ComponentModel::IContainer^ components;
+
+
 
 
 
@@ -101,7 +119,7 @@ namespace KotSasun {
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		System::ComponentModel::Container^ components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -110,7 +128,6 @@ namespace KotSasun {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->toolStrip1 = (gcnew System::Windows::Forms::ToolStrip());
 			this->FileNameSendButton = (gcnew System::Windows::Forms::Button());
 			this->FileNameDeclineButton = (gcnew System::Windows::Forms::Button());
 			this->CreateFileLabel = (gcnew System::Windows::Forms::Label());
@@ -128,17 +145,13 @@ namespace KotSasun {
 			this->MarksTextBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->FIOTextBox = (gcnew System::Windows::Forms::TextBox());
 			this->FileNameTextBox = (gcnew System::Windows::Forms::TextBox());
-			this->LinkedList1 = (gcnew System::Windows::Forms::Button());
-			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->LinkedListButton1 = (gcnew System::Windows::Forms::Button());
+			this->DisplayPanel = (gcnew System::Windows::Forms::Panel());
+			this->LinkedListButton2 = (gcnew System::Windows::Forms::Button());
+			this->BSTButton = (gcnew System::Windows::Forms::Button());
+			this->AVLButton = (gcnew System::Windows::Forms::Button());
+			this->BestStudentsButton = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
-			// 
-			// toolStrip1
-			// 
-			this->toolStrip1->Location = System::Drawing::Point(0, 0);
-			this->toolStrip1->Name = L"toolStrip1";
-			this->toolStrip1->Size = System::Drawing::Size(593, 25);
-			this->toolStrip1->TabIndex = 1;
-			this->toolStrip1->Text = L"toolStrip1";
 			// 
 			// FileNameSendButton
 			// 
@@ -272,7 +285,7 @@ namespace KotSasun {
 			// 
 			// FIOTextBox
 			// 
-			this->FIOTextBox->Location = System::Drawing::Point(143, 102);
+			this->FIOTextBox->Location = System::Drawing::Point(143, 100);
 			this->FIOTextBox->Name = L"FIOTextBox";
 			this->FIOTextBox->Size = System::Drawing::Size(264, 20);
 			this->FIOTextBox->TabIndex = 6;
@@ -284,31 +297,75 @@ namespace KotSasun {
 			this->FileNameTextBox->Size = System::Drawing::Size(264, 20);
 			this->FileNameTextBox->TabIndex = 0;
 			// 
-			// LinkedList1
+			// LinkedListButton1
 			// 
-			this->LinkedList1->Location = System::Drawing::Point(12, 214);
-			this->LinkedList1->Name = L"LinkedList1";
-			this->LinkedList1->Size = System::Drawing::Size(152, 26);
-			this->LinkedList1->TabIndex = 19;
-			this->LinkedList1->Text = L"Динамическая цепочка 1";
-			this->LinkedList1->UseVisualStyleBackColor = true;
-			this->LinkedList1->Click += gcnew System::EventHandler(this, &MyForm::LinkedList1_Click);
+			this->LinkedListButton1->Location = System::Drawing::Point(12, 214);
+			this->LinkedListButton1->Name = L"LinkedListButton1";
+			this->LinkedListButton1->Size = System::Drawing::Size(152, 26);
+			this->LinkedListButton1->TabIndex = 19;
+			this->LinkedListButton1->Text = L"Динамическая цепочка 1";
+			this->LinkedListButton1->UseVisualStyleBackColor = true;
+			this->LinkedListButton1->Click += gcnew System::EventHandler(this, &MyForm::LinkedListButton1_Click);
 			// 
-			// panel1
+			// DisplayPanel
 			// 
-			this->panel1->AutoScroll = true;
-			this->panel1->Location = System::Drawing::Point(190, 214);
-			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(321, 211);
-			this->panel1->TabIndex = 21;
+			this->DisplayPanel->AutoScroll = true;
+			this->DisplayPanel->Location = System::Drawing::Point(190, 214);
+			this->DisplayPanel->Name = L"DisplayPanel";
+			this->DisplayPanel->Size = System::Drawing::Size(391, 211);
+			this->DisplayPanel->TabIndex = 21;
+			// 
+			// LinkedListButton2
+			// 
+			this->LinkedListButton2->Location = System::Drawing::Point(12, 246);
+			this->LinkedListButton2->Name = L"LinkedListButton2";
+			this->LinkedListButton2->Size = System::Drawing::Size(152, 26);
+			this->LinkedListButton2->TabIndex = 22;
+			this->LinkedListButton2->Text = L"Динамическая цепочка 2";
+			this->LinkedListButton2->UseVisualStyleBackColor = true;
+			this->LinkedListButton2->Click += gcnew System::EventHandler(this, &MyForm::LinkedListButton2_Click);
+			// 
+			// BSTButton
+			// 
+			this->BSTButton->Location = System::Drawing::Point(12, 278);
+			this->BSTButton->Name = L"BSTButton";
+			this->BSTButton->Size = System::Drawing::Size(152, 26);
+			this->BSTButton->TabIndex = 23;
+			this->BSTButton->Text = L"Дерево поиска";
+			this->BSTButton->UseVisualStyleBackColor = true;
+			this->BSTButton->Click += gcnew System::EventHandler(this, &MyForm::BSTButton_Click);
+			// 
+			// AVLButton
+			// 
+			this->AVLButton->Location = System::Drawing::Point(12, 310);
+			this->AVLButton->Name = L"AVLButton";
+			this->AVLButton->Size = System::Drawing::Size(152, 26);
+			this->AVLButton->TabIndex = 24;
+			this->AVLButton->Text = L"Дерево AVL";
+			this->AVLButton->UseVisualStyleBackColor = true;
+			this->AVLButton->Click += gcnew System::EventHandler(this, &MyForm::AVLButton_Click);
+			// 
+			// BestStudentsButton
+			// 
+			this->BestStudentsButton->Location = System::Drawing::Point(12, 342);
+			this->BestStudentsButton->Name = L"BestStudentsButton";
+			this->BestStudentsButton->Size = System::Drawing::Size(152, 26);
+			this->BestStudentsButton->TabIndex = 25;
+			this->BestStudentsButton->Text = L"Лучшие студенты";
+			this->BestStudentsButton->UseVisualStyleBackColor = true;
+			this->BestStudentsButton->Click += gcnew System::EventHandler(this, &MyForm::BestStudentsButton_Click);
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(593, 450);
-			this->Controls->Add(this->panel1);
-			this->Controls->Add(this->LinkedList1);
+			this->ClientSize = System::Drawing::Size(593, 443);
+			this->Controls->Add(this->BestStudentsButton);
+			this->Controls->Add(this->AVLButton);
+			this->Controls->Add(this->BSTButton);
+			this->Controls->Add(this->LinkedListButton2);
+			this->Controls->Add(this->DisplayPanel);
+			this->Controls->Add(this->LinkedListButton1);
 			this->Controls->Add(this->MarksDeclineButton);
 			this->Controls->Add(this->StudentDataSendButton);
 			this->Controls->Add(this->MarksTextBox5);
@@ -325,7 +382,6 @@ namespace KotSasun {
 			this->Controls->Add(this->CreateFileLabel);
 			this->Controls->Add(this->FileNameDeclineButton);
 			this->Controls->Add(this->FileNameSendButton);
-			this->Controls->Add(this->toolStrip1);
 			this->Controls->Add(this->FileNameTextBox);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
@@ -334,10 +390,47 @@ namespace KotSasun {
 
 		}
 #pragma endregion
+
+	private: System::Void DisplayMessage_InvalidFile()
+	{
+		System::Windows::Forms::MessageBox::Show("File is not valid!", "ERROR", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
+
+	private: System::Void DisplayMessage_InvalidFIO()
+	{
+		System::Windows::Forms::MessageBox::Show("FIO is not valid!", "ERROR", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
+	private: System::Void DisplayMessage_InvalidMarks()
+	{
+		System::Windows::Forms::MessageBox::Show("Marks are not valid!", "ERROR", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
+
+	private: bool ValidateMarks(const std::string& str)
+	{
+		if (str.length() != 7)
+		{
+			return false;
+		}
+		for (int i = 1; i < 6; ++i)
+		{
+			int mark = str[i] - '0';
+			if (mark > 5 || mark < 2)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
 	private: System::Void FileNameSendButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		std::string fileName = msclr::interop::marshal_as<std::string>(FileNameTextBox->Text);
 		KotSasun_Config::FILE_NAME = fileName;
 		std::ofstream outfile(fileName, std::ios_base::app);
+		if (!outfile.good())
+		{
+			DisplayMessage_InvalidFile();
+			return;
+		}
 		outfile.close();
 	}
 
@@ -351,8 +444,20 @@ namespace KotSasun {
 	private: System::Void MarksSendButton_Click(System::Object^ sender, System::EventArgs^ e) {
 
 		std::ofstream outfile(KotSasun_Config::FILE_NAME, std::ios_base::app);
+
+		if (!outfile.good())
+		{
+			DisplayMessage_InvalidFile();
+			return;
+		}
+
+		if (FIOTextBox->Text == "" || FIOTextBox->Text->Length > 20)
+		{
+			DisplayMessage_InvalidFIO();
+			outfile.close();
+			return;
+		}
 		std::string fio = msclr::interop::marshal_as<std::string>(FIOTextBox->Text);
-		outfile << fio;
 
 		std::string marks = "|";
 		marks += msclr::interop::marshal_as<std::string>(MarksTextBox1->Text);
@@ -360,9 +465,19 @@ namespace KotSasun {
 		marks += msclr::interop::marshal_as<std::string>(MarksTextBox3->Text);
 		marks += msclr::interop::marshal_as<std::string>(MarksTextBox4->Text);
 		marks += msclr::interop::marshal_as<std::string>(MarksTextBox5->Text) + "\n";
+
+		if (!ValidateMarks(marks))
+		{
+			DisplayMessage_InvalidMarks();
+			outfile.close();
+			return;
+		}
+
+		outfile << fio;
 		outfile << marks;
 		outfile.close();
 	}
+
 	private: System::Void MarksDeclineButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		MarksTextBox1->Text = "";
 		MarksTextBox2->Text = "";
@@ -370,26 +485,24 @@ namespace KotSasun {
 		MarksTextBox4->Text = "";
 		MarksTextBox5->Text = "";
 	}
-	private: System::Void LinkedList1_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	private: System::Void LinkedListButton1_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		LinkedList<StudentData> list;
+		int debtIdx = -1;
+		auto debtIter = list.begin();
 
 		std::string data;
 		std::ifstream infile(KotSasun_Config::FILE_NAME);
-
-		int marks[5];
-		LinkedList<StudentData> list;
-		int debtIdx = -1;
-
+		if (!infile.good())
+		{
+			DisplayMessage_InvalidFile();
+			return;
+		}
 		while (infile >> data)
 		{
-			int separatorIdx = data.find('|');
-			std::string fio = data.substr(0, separatorIdx);
+			StudentData student = KotSasun_Utils::createStudentFromString(data);
 
-			for (int i = 0; i < 5; ++i)
-			{
-				marks[i] = data[++separatorIdx] - '0';
-			}
-
-			StudentData student(fio, marks);
 			if (student.isInDebt())
 			{
 				list.addToHead(student);
@@ -400,23 +513,190 @@ namespace KotSasun {
 				list.addAfterIndex(student, debtIdx);
 			}
 		}
+		infile.close();
 
 		int y = 10;
-		panel1->Controls->Clear();
+		int x = 20;
+		int paddingY = 30;
+		DisplayPanel->Controls->Clear();
 		for (auto& elem : list)
 		{
-			auto label = (gcnew Label());
-			label->Location = System::Drawing::Point(20, y);
-			System::String^ text = gcnew String(elem.FIO().c_str());
-			text +=" avg: " + elem.avg().ToString();
-			label->Text = text;
-			label->Size = System::Drawing::Size(100, 20);
-			label->Parent = panel1;
-			y += 30;
-			panel1->Controls->Add(label);
+			Label^ label = KotSasun_Utils::createStudentLabel(x, y, elem);
+			label->Parent = DisplayPanel;
+			DisplayPanel->Controls->Add(label);
+			y += paddingY;
+		}
+
+	}
+
+
+	private: System::Void LinkedListButton2_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		LinkedList<StudentData> list;
+
+		std::string data;
+		std::ifstream infile(KotSasun_Config::FILE_NAME);
+
+		if (!infile.good())
+		{
+			DisplayMessage_InvalidFile();
+			return;
+		}
+		if (infile >> data)
+		{
+			StudentData student = KotSasun_Utils::createStudentFromString(data);
+			list.addToHead(student);
+		}
+
+		while (infile >> data)
+		{
+			StudentData student = KotSasun_Utils::createStudentFromString(data);
+			KotSasun_Utils::insertSorted(list, student, KotSasun_Utils::comparatorGreater);
+		}
+		infile.close();
+
+		int y = 10;
+		int x = 20;
+		int paddingY = 30;
+		DisplayPanel->Controls->Clear();
+		for (auto& elem : list)
+		{
+			Label^ label = KotSasun_Utils::createStudentLabel(20, y, elem);
+			label->Parent = DisplayPanel;
+			DisplayPanel->Controls->Add(label);
+			y += paddingY;
+		}
+	}
+
+
+	private: System::Void DisplayTree(ITree<StudentData>& tree)
+	{
+		DisplayPanel->Controls->Clear();
+		int x = 150;
+		int paddingX = 380;
+		int y = 10;
+		int paddingY = 20;
+		for (int i = 1; i <= 3; ++i)
+		{
+			int tempX = x;
+			std::queue<LinkedList<StudentData>*> que = tree.getLevel(i);
+
+			while (!que.empty())
+			{
+				LinkedList<StudentData>* list = que.front();
+				que.pop();
+				Panel^ panel = KotSasun_Utils::createPanel(tempX, y);
+				panel->Parent = DisplayPanel;
+				DisplayPanel->Controls->Add(panel);
+
+				if (list != nullptr)
+				{
+					int tempY = 0;
+					for (auto& elem : *list)
+					{
+						Label^ label = KotSasun_Utils::createStudentLabel(10, tempY, elem);
+						label->Parent = panel;
+						panel->Controls->Add(label);
+						tempY += paddingY;
+					}
+				}
+
+				tempX += paddingX;
+			}
+
+			y += 70;
+			paddingX /= 2;
+			x -= paddingX / 2;
 
 		}
 
+	}
+
+	private: System::Void BSTButton_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		std::string data;
+		std::ifstream infile(KotSasun_Config::FILE_NAME);
+
+		if (!infile.good())
+		{
+			DisplayMessage_InvalidFile();
+			return;
+		}
+		BST<StudentData> bst;
+
+		while (infile >> data)
+		{
+			StudentData student = KotSasun_Utils::createStudentFromString(data);
+			bst.insert(student);
+		}
+		infile.close();
+
+		DisplayTree(bst);
+
+	}
+	private: System::Void AVLButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		std::string data;
+		std::ifstream infile(KotSasun_Config::FILE_NAME);
+
+		if (!infile.good())
+		{
+			DisplayMessage_InvalidFile();
+			return;
+		}
+		AVL<StudentData> avl;
+
+		while (infile >> data)
+		{
+			StudentData student = KotSasun_Utils::createStudentFromString(data);
+			avl.insert(student);
+		}
+		infile.close();
+
+		DisplayTree(avl);
+	}
+	private: System::Void BestStudentsButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		LinkedList<StudentData> list;
+
+		std::string data;
+		std::ifstream infile(KotSasun_Config::FILE_NAME);
+		if (!infile.good())
+		{
+			DisplayMessage_InvalidFile();
+			return;
+		}
+
+		if (infile >> data)
+		{
+			StudentData student = KotSasun_Utils::createStudentFromString(data);
+			list.addToHead(student);
+		}
+
+		while (infile >> data)
+		{
+			StudentData student = KotSasun_Utils::createStudentFromString(data);
+			KotSasun_Utils::insertSorted(list, student, KotSasun_Utils::comparatorLesser);
+		}
+
+		infile.close();
+
+		int y = 10;
+		int x = 20;
+		int paddingY = 30;
+		DisplayPanel->Controls->Clear();
+
+		double bestMarks = (*list.begin()).avg();
+
+		for (auto& elem : list)
+		{
+			if (elem.avg() != bestMarks)
+			{
+				break;
+			}
+			Label^ label = KotSasun_Utils::createStudentLabel(20, y, elem);
+			label->Parent = DisplayPanel;
+			DisplayPanel->Controls->Add(label);
+			y += paddingY;
+		}
 	}
 
 	};

@@ -126,11 +126,13 @@
     <ClInclude Include="AVL.h" />
     <ClInclude Include="BST.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="ITree.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="StudentData.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">
