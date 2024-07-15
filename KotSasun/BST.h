@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include <iostream>
 #include <queue>
 #include <utility>
@@ -95,11 +96,13 @@ class BST {
   void del(T data);
 
   // 0 height is full tree
-  void breadthFirstView(int height = 0) {
+  void breadthFirstView(std::ostream& os, int height = 0) {
     if (!_root || height < 0) return;
 
     std::queue<std::pair<TreeNode*, int>> que;
     que.push({_root, 1});
+
+    int prevDepth = 1;
 
     while (!que.empty()) {
       auto currentPair = q.front();
@@ -111,7 +114,11 @@ class BST {
       if (height != 0 && currentDepth > height) break;
 
       // change output if needed
-      std::cout << currentNode->key << " ";
+      if (currentDepth != prevDepth) {
+        os << std::endl;
+        prevDepth = currentDepth;
+      }
+      os << currentNode->key << " ";
 
       if (currentNode->left) {
         q.push({currentNode->left, currentDepth + 1});
