@@ -693,6 +693,7 @@ namespace Program {
 				break;
 			}
 			Label^ label = Program::Utils::createStudentLabel(20, y, elem);
+			label->Text += (gcnew System::String(elem.marks().c_str()));
 			label->Parent = DisplayPanel;
 			DisplayPanel->Controls->Add(label);
 			y += paddingY;
