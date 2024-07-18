@@ -71,7 +71,7 @@ public:
 			return *this;
 		}
 		Iterator operator++(int) {
-			iterator tmp = *this;
+			Iterator tmp = *this;
 			++(*this);
 			return tmp;
 		}
@@ -96,22 +96,6 @@ public:
 		Node<T>* current = elem;
 		Node<T>* newNext = new Node<T>(data, elem->next);
 		current->next = newNext;
-	}
-
-	void addAfterIndex(const T& data, int idx) {
-		if (idx < 0) {
-			addToHead(data);
-			return;
-		}
-
-		int counter = 0;
-		Node<T>* current = head;
-		while (counter < idx) {
-			current = current->next;
-			++counter;
-		}
-
-		addAfterNode(data, current);
 	}
 
 	void deleteFromHead() {

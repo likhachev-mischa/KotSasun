@@ -489,7 +489,6 @@ namespace Program {
 	private: System::Void LinkedListButton1_Click(System::Object^ sender, System::EventArgs^ e) {
 
 		LinkedList<StudentData> list;
-		int debtIdx = -1;
 		auto debtIter = list.begin();
 
 		std::string data;
@@ -506,11 +505,21 @@ namespace Program {
 			if (student.isInDebt())
 			{
 				list.addToHead(student);
-				debtIdx++;
+				if (!debtIter.GetNode())
+				{
+					debtIter = list.begin();
+				}
 			}
 			else
 			{
-				list.addAfterIndex(student, debtIdx);
+				if (!debtIter.GetNode())
+				{
+					list.addToHead(student);
+				}
+				else
+				{
+					list.addAfterNode(student, debtIter.GetNode());
+				}
 			}
 		}
 		infile.close();
