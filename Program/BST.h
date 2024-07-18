@@ -49,7 +49,7 @@ public:
 		}
 	}
 
-	void insert(T data) {
+	void insert(const T& data) {
 		TreeNode* insNode = new TreeNode(data);
 		int insertKey = insNode->key;
 
@@ -119,10 +119,17 @@ public:
 					continue;
 				}
 			}
+			if (currentNode)
+			{
+				que.push({ currentNode->left, currentDepth + 1 });
+				que.push({ currentNode->right, currentDepth + 1 });
+			}
+			else
+			{
+				que.push({ nullptr, currentDepth + 1 });
+				que.push({ nullptr, currentDepth + 1});
 
-			que.push({ currentNode->left, currentDepth + 1 });
-
-			que.push({ currentNode->right, currentDepth + 1 });
+			}
 		}
 		return level;
 	}

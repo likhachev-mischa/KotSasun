@@ -178,9 +178,17 @@ public:
 				}
 			}
 
-			que.push({ currentNode->left, currentDepth + 1 });
+			if (currentNode)
+			{
+				que.push({ currentNode->left, currentDepth + 1 });
+				que.push({ currentNode->right, currentDepth + 1 });
+			}
+			else
+			{
+				que.push({ nullptr, currentDepth + 1 });
+				que.push({ nullptr, currentDepth + 1});
 
-			que.push({ currentNode->right, currentDepth + 1 });
+			}
 		}
 		return level;
 	}
