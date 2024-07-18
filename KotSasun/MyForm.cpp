@@ -8,7 +8,7 @@
 #include "AVL.h"
 #include "BST.h"
 
-using namespace KotSasun;
+using namespace Program;
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
   

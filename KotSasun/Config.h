@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
-namespace KotSasun_Config {
-static std::string FILE_NAME;
+namespace Program {
+	namespace Config {
+		static std::string FILE_NAME;
+	}
 }

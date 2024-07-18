@@ -13,7 +13,7 @@
 #include "Utils.h"
 
 
-namespace KotSasun {
+namespace Program {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -424,7 +424,7 @@ namespace KotSasun {
 
 	private: System::Void FileNameSendButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		std::string fileName = msclr::interop::marshal_as<std::string>(FileNameTextBox->Text);
-		KotSasun_Config::FILE_NAME = fileName;
+		Program::Config::FILE_NAME = fileName;
 		std::ofstream outfile(fileName, std::ios_base::app);
 		if (!outfile.good())
 		{
@@ -443,7 +443,7 @@ namespace KotSasun {
 	}
 	private: System::Void MarksSendButton_Click(System::Object^ sender, System::EventArgs^ e) {
 
-		std::ofstream outfile(KotSasun_Config::FILE_NAME, std::ios_base::app);
+		std::ofstream outfile(Program::Config::FILE_NAME, std::ios_base::app);
 
 		if (!outfile.good())
 		{
@@ -493,7 +493,7 @@ namespace KotSasun {
 		auto debtIter = list.begin();
 
 		std::string data;
-		std::ifstream infile(KotSasun_Config::FILE_NAME);
+		std::ifstream infile(Program::Config::FILE_NAME);
 		if (!infile.good())
 		{
 			DisplayMessage_InvalidFile();
@@ -501,7 +501,7 @@ namespace KotSasun {
 		}
 		while (infile >> data)
 		{
-			StudentData student = KotSasun_Utils::createStudentFromString(data);
+			StudentData student = Program::Utils::createStudentFromString(data);
 
 			if (student.isInDebt())
 			{
@@ -521,7 +521,7 @@ namespace KotSasun {
 		DisplayPanel->Controls->Clear();
 		for (auto& elem : list)
 		{
-			Label^ label = KotSasun_Utils::createStudentLabel(x, y, elem);
+			Label^ label = Program::Utils::createStudentLabel(x, y, elem);
 			label->Parent = DisplayPanel;
 			DisplayPanel->Controls->Add(label);
 			y += paddingY;
@@ -535,7 +535,7 @@ namespace KotSasun {
 		LinkedList<StudentData> list;
 
 		std::string data;
-		std::ifstream infile(KotSasun_Config::FILE_NAME);
+		std::ifstream infile(Program::Config::FILE_NAME);
 
 		if (!infile.good())
 		{
@@ -544,14 +544,14 @@ namespace KotSasun {
 		}
 		if (infile >> data)
 		{
-			StudentData student = KotSasun_Utils::createStudentFromString(data);
+			StudentData student = Program::Utils::createStudentFromString(data);
 			list.addToHead(student);
 		}
 
 		while (infile >> data)
 		{
-			StudentData student = KotSasun_Utils::createStudentFromString(data);
-			KotSasun_Utils::insertSorted(list, student, KotSasun_Utils::comparatorGreater);
+			StudentData student = Program::Utils::createStudentFromString(data);
+			Program::Utils::insertSorted(list, student, Program::Utils::comparatorGreater);
 		}
 		infile.close();
 
@@ -561,7 +561,7 @@ namespace KotSasun {
 		DisplayPanel->Controls->Clear();
 		for (auto& elem : list)
 		{
-			Label^ label = KotSasun_Utils::createStudentLabel(20, y, elem);
+			Label^ label = Program::Utils::createStudentLabel(20, y, elem);
 			label->Parent = DisplayPanel;
 			DisplayPanel->Controls->Add(label);
 			y += paddingY;
@@ -585,7 +585,7 @@ namespace KotSasun {
 			{
 				LinkedList<StudentData>* list = que.front();
 				que.pop();
-				Panel^ panel = KotSasun_Utils::createPanel(tempX, y);
+				Panel^ panel = Program::Utils::createPanel(tempX, y);
 				panel->Parent = DisplayPanel;
 				DisplayPanel->Controls->Add(panel);
 
@@ -594,7 +594,7 @@ namespace KotSasun {
 					int tempY = 0;
 					for (auto& elem : *list)
 					{
-						Label^ label = KotSasun_Utils::createStudentLabel(10, tempY, elem);
+						Label^ label = Program::Utils::createStudentLabel(10, tempY, elem);
 						label->Parent = panel;
 						panel->Controls->Add(label);
 						tempY += paddingY;
@@ -615,7 +615,7 @@ namespace KotSasun {
 	private: System::Void BSTButton_Click(System::Object^ sender, System::EventArgs^ e) {
 
 		std::string data;
-		std::ifstream infile(KotSasun_Config::FILE_NAME);
+		std::ifstream infile(Program::Config::FILE_NAME);
 
 		if (!infile.good())
 		{
@@ -626,7 +626,7 @@ namespace KotSasun {
 
 		while (infile >> data)
 		{
-			StudentData student = KotSasun_Utils::createStudentFromString(data);
+			StudentData student = Program::Utils::createStudentFromString(data);
 			bst.insert(student);
 		}
 		infile.close();
@@ -636,7 +636,7 @@ namespace KotSasun {
 	}
 	private: System::Void AVLButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		std::string data;
-		std::ifstream infile(KotSasun_Config::FILE_NAME);
+		std::ifstream infile(Program::Config::FILE_NAME);
 
 		if (!infile.good())
 		{
@@ -647,7 +647,7 @@ namespace KotSasun {
 
 		while (infile >> data)
 		{
-			StudentData student = KotSasun_Utils::createStudentFromString(data);
+			StudentData student = Program::Utils::createStudentFromString(data);
 			avl.insert(student);
 		}
 		infile.close();
@@ -658,7 +658,7 @@ namespace KotSasun {
 		LinkedList<StudentData> list;
 
 		std::string data;
-		std::ifstream infile(KotSasun_Config::FILE_NAME);
+		std::ifstream infile(Program::Config::FILE_NAME);
 		if (!infile.good())
 		{
 			DisplayMessage_InvalidFile();
@@ -667,14 +667,14 @@ namespace KotSasun {
 
 		if (infile >> data)
 		{
-			StudentData student = KotSasun_Utils::createStudentFromString(data);
+			StudentData student = Program::Utils::createStudentFromString(data);
 			list.addToHead(student);
 		}
 
 		while (infile >> data)
 		{
-			StudentData student = KotSasun_Utils::createStudentFromString(data);
-			KotSasun_Utils::insertSorted(list, student, KotSasun_Utils::comparatorLesser);
+			StudentData student = Program::Utils::createStudentFromString(data);
+			Program::Utils::insertSorted(list, student, Program::Utils::comparatorLesser);
 		}
 
 		infile.close();
@@ -692,7 +692,7 @@ namespace KotSasun {
 			{
 				break;
 			}
-			Label^ label = KotSasun_Utils::createStudentLabel(20, y, elem);
+			Label^ label = Program::Utils::createStudentLabel(20, y, elem);
 			label->Parent = DisplayPanel;
 			DisplayPanel->Controls->Add(label);
 			y += paddingY;
