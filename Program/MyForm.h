@@ -274,7 +274,7 @@ namespace Program {
 			this->StudentDataSendButton->TabIndex = 17;
 			this->StudentDataSendButton->Text = L"Отправить";
 			this->StudentDataSendButton->UseVisualStyleBackColor = true;
-			this->StudentDataSendButton->Click += gcnew System::EventHandler(this, &MyForm::MarksSendButton_Click);
+			this->StudentDataSendButton->Click += gcnew System::EventHandler(this, &MyForm::StudentDataSendButton_Click);
 			// 
 			// MarksTextBox1
 			// 
@@ -441,7 +441,7 @@ namespace Program {
 	private: System::Void FIODeclineButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		FIOTextBox->Text = "";
 	}
-	private: System::Void MarksSendButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void StudentDataSendButton_Click(System::Object^ sender, System::EventArgs^ e) {
 
 		std::ofstream outfile(Program::Config::FILE_NAME, std::ios_base::app);
 
